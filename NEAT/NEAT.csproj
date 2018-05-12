@@ -65,8 +65,12 @@
       <DependentUpon>gameSnake.cs</DependentUpon>
     </Compile>
     <Compile Include="InfoManager.cs" />
+    <Compile Include="NEAT\Config.cs" />
+    <Compile Include="NEAT\Fitness.cs" />
     <Compile Include="NEAT\Genome.cs" />
+    <Compile Include="NEAT\NeatManager.cs" />
     <Compile Include="NEAT\Neuron.cs" />
+    <Compile Include="NEAT\NeuronType.cs" />
     <Compile Include="NEAT\Species.cs" />
     <Compile Include="NEAT\Synapse.cs" />
     <Compile Include="Program.cs" />

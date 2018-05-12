@@ -71,21 +71,25 @@
             // 
             // btnTrain
             // 
+            this.btnTrain.Enabled = false;
             this.btnTrain.Location = new System.Drawing.Point(12, 107);
             this.btnTrain.Name = "btnTrain";
             this.btnTrain.Size = new System.Drawing.Size(150, 23);
             this.btnTrain.TabIndex = 3;
             this.btnTrain.Text = "Train";
             this.btnTrain.UseVisualStyleBackColor = true;
+            this.btnTrain.Click += new System.EventHandler(this.btnTrain_Click);
             // 
             // btnPlay
             // 
+            this.btnPlay.Enabled = false;
             this.btnPlay.Location = new System.Drawing.Point(12, 136);
             this.btnPlay.Name = "btnPlay";
             this.btnPlay.Size = new System.Drawing.Size(150, 23);
             this.btnPlay.TabIndex = 4;
             this.btnPlay.Text = "Play";
             this.btnPlay.UseVisualStyleBackColor = true;
+            this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
             // 
             // rtxtInformation
             // 
@@ -95,7 +99,7 @@
             this.rtxtInformation.Location = new System.Drawing.Point(261, 12);
             this.rtxtInformation.Name = "rtxtInformation";
             this.rtxtInformation.ReadOnly = true;
-            this.rtxtInformation.Size = new System.Drawing.Size(350, 337);
+            this.rtxtInformation.Size = new System.Drawing.Size(550, 337);
             this.rtxtInformation.TabIndex = 6;
             this.rtxtInformation.Text = "";
             // 
@@ -103,7 +107,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(634, 361);
+            this.ClientSize = new System.Drawing.Size(834, 361);
             this.Controls.Add(this.rtxtInformation);
             this.Controls.Add(this.btnPlay);
             this.Controls.Add(this.btnTrain);

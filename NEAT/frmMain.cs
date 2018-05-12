@@ -1,10 +1,13 @@
-﻿using System;
+﻿using NEAT.NEAT;
+using System;
 using System.Windows.Forms;
 
 namespace NEAT
 {
     public partial class frmMain : Form
     {
+        NeatManager _neat;
+        String _game;
         public frmMain()
         {
             InitializeComponent();
@@ -21,10 +24,10 @@ namespace NEAT
 
         private void btnSelectGame_Click(object sender, EventArgs e)
         {
-            int game = cmbGames.SelectedIndex;
-            String gameName = (String)cmbGames.Items[game];
+            _game = (String)cmbGames.Items[cmbGames.SelectedIndex];
 
-            GameManager.load(gameName);
+            btnPlay.Enabled = true;
+            btnTrain.Enabled = true;
         }
 
         private void frmMain_Activated(object sender, EventArgs e)
@@ -33,6 +36,17 @@ namespace NEAT
             game2048.StartPosition = FormStartPosition.CenterScreen;
             game2048.Show();
             game2048.Focus();
+        }
+
+        private void btnTrain_Click(object sender, EventArgs e)
+        {
+            _neat = new NeatManager(_game);
+            _neat.train();
+        }
+
+        private void btnPlay_Click(object sender, EventArgs e)
+        {
+            GameManager.load(_game);
         }
     }
 }

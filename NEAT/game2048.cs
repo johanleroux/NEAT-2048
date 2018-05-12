@@ -15,7 +15,7 @@ namespace NEAT
 
         private GameState state;
 
-        enum Direction { Up, Down, Left, Right };
+        public enum Direction { Up, Down, Left, Right };
         enum GameState { Playing, GameOver };
 
         public game2048()

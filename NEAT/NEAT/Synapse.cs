@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace NEAT.NEAT
 {
-    class Synapse
+    public class Synapse
     {
         public Guid instanceID { get; private set; }
-        protected Neuron from, to;
+        public Neuron from, to;
 
-        protected double weight;
+        public double weight;
         protected bool enabled;
+
+        public long invovationID;
 
         public Synapse()
         {
@@ -22,6 +24,11 @@ namespace NEAT.NEAT
             this.to = null;
 
             this.weight = 0f;
+            this.enabled = true;
+        }
+
+        public void disable()
+        {
             this.enabled = false;
         }
     }

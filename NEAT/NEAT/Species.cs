@@ -6,25 +6,41 @@ using System.Threading.Tasks;
 
 namespace NEAT.NEAT
 {
-    class Species
+    public class Species
     {
-        protected List<Genome> genomes;
+        public Guid instanceID { get; private set; }
 
-        protected Genome candidate;
+        public List<Genome> genomes;
 
-        protected double populationSize, sumAdjustedFitness, extinctionCounter;
+        public Genome candidate;
+
+        public double averageFitness, sumAdjustedFitness, extinctionCounter;
+
+        public int populationSize;
 
         public Species()
         {
+            this.instanceID = Guid.NewGuid();
+
             this.genomes = new List<Genome>();
 
             this.candidate = null;
 
-            this.populationSize = 0f;
+            this.populationSize = 0;
 
             this.sumAdjustedFitness = 0f;
 
             this.extinctionCounter = 0f;
+        }
+
+        public void randomGenome()
+        {
+            this.genomes.Add(new Genome());
+        }
+
+        public List<Genome> getGenomes()
+        {
+            return this.genomes;
         }
     }
 }
