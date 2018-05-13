@@ -70,7 +70,7 @@ namespace NEAT
 
             state = GameState.Playing;
 
-            draw();
+            //draw();
         }
 
         private void randomPiece()
@@ -435,7 +435,7 @@ namespace NEAT
 
             checkGameOver();
 
-            draw();
+            //draw();
         }
 
         public void checkGameOver()
