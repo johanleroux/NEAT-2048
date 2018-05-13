@@ -28,10 +28,10 @@ namespace NEAT.Utils
                 return r.NextDouble() <= chance;
         }
 
-        internal static double doubleRand(double min, double max)
+        public static double doubleRand(double min, double max)
         {
             lock (synLock)
-                return r.NextDouble() * (max - (-min) + (-min));
+                return r.NextDouble() * (max - min) + min;
         }
     }
 }

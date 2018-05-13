@@ -57,6 +57,8 @@ namespace NEAT.NEAT.Models
 
         public void updateCandidate()
         {
+            if (this.genomes.Count == 0) return;
+
             this.candidate = this.genomes[RandomUtil.integer(0, this.genomes.Count - 1)];
         }
 

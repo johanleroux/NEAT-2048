@@ -50,8 +50,8 @@ namespace NEAT.NEAT
 
                     int from = this.genome.getNodes(true, true, false)[RandomUtil.integer(0, this.genome.getNodes(true, true, false).Count - 1)];
                     List<int> leftOver = this.genome.getNodes(false, true, true);
-                    if (!leftOver.Remove(from))
-                        throw new Exception("Unable to remove genome");
+                    leftOver.Remove(from);
+                        //throw new Exception("Unable to remove genome");
 
                     if (leftOver.Count == 0) continue;
 

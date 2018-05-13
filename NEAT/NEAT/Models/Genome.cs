@@ -67,7 +67,7 @@ namespace NEAT.NEAT.Models
         public void addInputNode(int node)
         {
             if (this.fitness != -1)
-                return;
+                throw new Exception("Training already begun");
 
             if (this.inputNodes.Contains(node))
                 return;
@@ -78,7 +78,7 @@ namespace NEAT.NEAT.Models
         public void addOutputNode(int node)
         {
             if (this.fitness != -1)
-                return;
+                throw new Exception("Training already begun");
 
             if (this.outputNodes.Contains(node))
                 return;
@@ -479,7 +479,7 @@ namespace NEAT.NEAT.Models
             mutation.mutate();
         }
 
-        public double[] calculateMove(int[] inputs)
+        public double[] calculateMove(double[] inputs)
         {
             return new Backtrack(this, inputs).calculateOutput();
         }
@@ -488,9 +488,11 @@ namespace NEAT.NEAT.Models
         {
             String tmp = "";
 
-            foreach(Synapse synapse in getSynapses())
+            for(int i = 0; i < getSynapses().Count; i++)
             {
-                tmp += synapse.toString() + Environment.NewLine;
+                tmp += getSynapses()[i].toString();
+                if(i < getSynapses().Count - 1)
+                    tmp += Environment.NewLine;
             }
 
             return tmp;

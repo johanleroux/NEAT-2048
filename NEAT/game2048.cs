@@ -12,6 +12,7 @@ namespace NEAT
         public int score, best = 0, timeElapsed;
         private int[,] gameField = new int[4,4];
         private Random rnd = new Random();
+        public bool background = true;
 
         private static System.Timers.Timer timer;
 
@@ -26,6 +27,11 @@ namespace NEAT
         }
 
         private void game2048_Load(object sender, EventArgs e)
+        {
+            load();
+        }
+
+        public void load()
         {
             width = 500;
             height = 550;
@@ -70,7 +76,7 @@ namespace NEAT
 
             state = GameState.Playing;
 
-            //draw();
+            draw();
         }
 
         private void randomPiece()
@@ -90,7 +96,8 @@ namespace NEAT
 
         private void draw()
         {
-            //InfoManager.addLine("Drawing");
+            if (background) return;
+
             Bitmap bmp = new Bitmap(pbGameScreen.Width, pbGameScreen.Height);
             using (Graphics g = Graphics.FromImage(bmp))
             {
@@ -263,8 +270,6 @@ namespace NEAT
 
         public void moveTiles(Direction direction)
         {
-            // InfoManager.addLine(direction.ToString());
-
             bool addTile = false;
             timer.Enabled = true;
 
@@ -435,7 +440,7 @@ namespace NEAT
 
             checkGameOver();
 
-            //draw();
+            draw();
         }
 
         public void checkGameOver()
@@ -522,15 +527,21 @@ namespace NEAT
             return new SolidBrush(ColorTranslator.FromHtml("#3c3a32"));
         }
 
-        public int[] getInputs()
+        public double[] getInputs()
         {
-            int[] inputs = new int[16];
+            double[] inputs = new double[16];
             int count = 0;
 
-            for(int x = 0; x < 4; x++)
+            int highest = 0;
+            for (int x = 0; x < 4; x++)
+                for (int y = 0; y < 4; y++)
+                    if (highest < gameField[x, y])
+                        highest = gameField[x, y];
+
+            for (int x = 0; x < 4; x++)
                 for(int y = 0; y < 4; y++)
                 {
-                    inputs[count] = (int) Math.Log(gameField[x, y], 2);
+                    inputs[count] = (float)Math.Log(gameField[x, y], 2) / (float)Math.Log(highest, 2);
                     count++;
                 }
 

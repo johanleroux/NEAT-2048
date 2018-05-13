@@ -12,7 +12,7 @@ namespace NEAT
         public static void addLine(String line)
         {
             textBox.AppendText(line + Environment.NewLine);
-            Console.WriteLine(line);
+            // Console.WriteLine(line);
 
             textBox.SelectionStart = textBox.Text.Length;
             textBox.ScrollToCaret();

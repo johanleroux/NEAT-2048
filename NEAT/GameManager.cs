@@ -18,6 +18,7 @@ namespace NEAT
                 case "2048":
                     game2048 = new game2048();
                     game2048.StartPosition = FormStartPosition.CenterScreen;
+                    game2048.background = false;
                     game2048.Show();
                     break;
                 case "Snake":

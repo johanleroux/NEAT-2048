@@ -11,7 +11,7 @@ namespace NEAT.NEAT
 
         public readonly Population currentPop;
         private int currentGeneration = 0;
-        private int populationSize = 10;
+        private int populationSize = 500;
         public Genome latestFitness;
 
         public PopulationManager(NeatManager neat)
@@ -33,7 +33,7 @@ namespace NEAT.NEAT
 
             int[] outputs = new int[neat.outputSize];
             for (int i = 0; i < outputs.Length; i++)
-                outputs[i] = i + 1;
+                outputs[i] = inputs.Length + i + 1;
 
             double dist = Config.MUTATION_WEIGHT_CHANCE_RANDOM_RANGE;
             Genome genome = new Genome(neat, null, inputs, outputs);
@@ -42,7 +42,7 @@ namespace NEAT.NEAT
                 for (int outNode = 1; outNode <= outputs.Length; outNode++)
                 {
                     double weight = RandomUtil.doubleRand(-dist, dist);
-                    genome.addSynapse(new Synapse(neat.getNextInnovationNumber(), inNode, neat.inputSize + outNode, weight, true), null, null);
+                    genome.addSynapse(new Synapse(neat.getNextInnovationNumber(), inNode, (neat.inputSize + outNode), weight, true), null, null);
                 }
             }
 
@@ -79,9 +79,6 @@ namespace NEAT.NEAT
             foreach(Species species in this.getSpecies())
                 bestGenomes.Add(species, species.bestGenomes());
 
-            Console.WriteLine("debug");
-            return;
-
             // Total of the average fitness
             double sum = 0;
             foreach (Species species in this.getSpecies())
@@ -95,7 +92,7 @@ namespace NEAT.NEAT
 
                 // Remove worst genomes
                 List<Genome> best = bestGenomes[vip];
-                if (best.Count == 0) return;
+                if (best.Count == 0) continue;
 
                 double remove = Math.Ceiling(best.Count * Config.GENERATION_ELIMINATION_PERCENTAGE);
                 int start = (int)(Math.Floor(best.Count - remove) + 1);
@@ -110,7 +107,7 @@ namespace NEAT.NEAT
                 vip.setFailedGenerations(vip.failedGenerations + 1);
                 if(vip.failedGenerations > 20)
                 {
-                    Console.WriteLine("Species " + vip.getID() + " was removed for being older than 20 generations.");
+                    // Console.WriteLine("Species " + vip.getID() + " was removed for being older than 20 generations.");
                     this.getSpecies().RemoveAt(s);
                     continue;
                 }
@@ -121,7 +118,7 @@ namespace NEAT.NEAT
 
                 if (breedsAllowed < 1)
                 {
-                    Console.WriteLine("Species " + vip.getID() + " was removed for being too large");
+                    // Console.WriteLine("Species " + vip.getID() + " was removed for being too large");
                     this.getSpecies().RemoveAt(s);
                     continue;
                 }
@@ -155,13 +152,9 @@ namespace NEAT.NEAT
 
                 species.genomes.Clear();
 
-                Genome vip = null;
                 if (vips.ContainsKey(species))
-                    vip = vips[species];
-
-                if(vip != null)
                 {
-                    species.genomes.Add(vip);
+                    species.genomes.Add(vips[species]);
                     popSize++;
                 }
             }
@@ -190,7 +183,7 @@ namespace NEAT.NEAT
                         // don't cross just copy
                         Genome g = oldMems[RandomUtil.integer(0, oldMems.Count - 1)].clone();
                         g.mutate();
-                        randomSpecies.genomes.Add(g);
+                        this.currentPop.addGenome(ref g);
                     }
                     popSize++;
                 }
@@ -213,10 +206,8 @@ namespace NEAT.NEAT
             // Display performance
             this.latestFitness = this.currentPop.getBestPerforming();
 
-            Console.WriteLine("Best performing genome [" + this.latestFitness.getID() + "] had fitness of " + this.latestFitness.getFitness() + " and was part of species " + this.latestFitness.species.getID() + " which has " + this.latestFitness.species.genomes.Count + " genomes");
-            Console.WriteLine(this.latestFitness.toString());
-
-            InfoManager.clearLine();
+            InfoManager.addLine("Best performing genome [" + this.latestFitness.getID() + "] had fitness of " + this.latestFitness.getFitness() + " and was part of species " + this.latestFitness.species.getID() + " which has " + this.latestFitness.species.genomes.Count + " genomes");
+            InfoManager.addLine(this.latestFitness.toString());
         }
     }
 }

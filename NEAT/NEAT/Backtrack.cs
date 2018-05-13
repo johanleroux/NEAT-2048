@@ -7,9 +7,9 @@ namespace NEAT.NEAT
     class Backtrack
     {
         private Genome genome;
-        private Dictionary<int, int> nodeInputValues = new Dictionary<int, int>();
+        private Dictionary<int, double> nodeInputValues = new Dictionary<int, double>();
 
-        public Backtrack(Genome genome, int[] inputs)
+        public Backtrack(Genome genome, double[] inputs)
         {
             this.genome = genome;
 
@@ -24,10 +24,13 @@ namespace NEAT.NEAT
         public double[] calculateOutput()
         {
             Dictionary<int, double> cache = new Dictionary<int, double>();
+
             int i = 0;
             double[] output = new double[this.genome.getOutputs().Length];
+
             foreach (int outputNode in this.genome.getOutputs())
                 output[i++] = this.getOutput(outputNode, cache);
+
             return output;
         }
 
@@ -56,7 +59,7 @@ namespace NEAT.NEAT
 
         private double activate(double x)
         {
-            return ((1.0f / (1.0f + (float)Math.Exp(-x))) + 1.0f) / 2;
+            return 1.0f / (1.0f + (float)Math.Exp(-4.9 * x));
         }
     }
 }
