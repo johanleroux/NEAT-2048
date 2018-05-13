@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NEAT.NEAT.Models;
+using System;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Windows.Forms;
@@ -7,16 +8,17 @@ namespace NEAT
 {
     public partial class game2048 : Form
     {
-        private int width, height, startHeight, startWidth, score, best, timeElapsed;
-        private int[,] gameField;
+        private int width, height, startHeight, startWidth;
+        public int score, best = 0, timeElapsed;
+        private int[,] gameField = new int[4,4];
         private Random rnd = new Random();
 
         private static System.Timers.Timer timer;
 
-        private GameState state;
+        public GameState state;
 
         public enum Direction { Up, Down, Left, Right };
-        enum GameState { Playing, GameOver };
+        public enum GameState { Playing, GameOver };
 
         public game2048()
         {
@@ -29,12 +31,9 @@ namespace NEAT
             height = 550;
             startHeight = 50;
             startWidth = 0;
-            best = 0;
 
             pbGameScreen.Size = new Size(width, height);
             pbGameScreen.Location = new Point(0, 0);
-
-            gameField = new int[4,4];
 
             initGame();
 
@@ -43,8 +42,10 @@ namespace NEAT
             InfoManager.addLine("2048 loaded");
         }
 
-        private void initGame()
+        public void initGame()
         {
+            gameField = new int[4, 4];
+
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 4; j++)
@@ -260,9 +261,9 @@ namespace NEAT
                 draw();
         }
 
-        private void moveTiles(Direction direction)
+        public void moveTiles(Direction direction)
         {
-            InfoManager.addLine(direction.ToString());
+            // InfoManager.addLine(direction.ToString());
 
             bool addTile = false;
             timer.Enabled = true;
@@ -519,6 +520,21 @@ namespace NEAT
             if (val == 1)
                 return new SolidBrush(ColorTranslator.FromHtml("#cdc1b4"));
             return new SolidBrush(ColorTranslator.FromHtml("#3c3a32"));
+        }
+
+        public int[] getInputs()
+        {
+            int[] inputs = new int[16];
+            int count = 0;
+
+            for(int x = 0; x < 4; x++)
+                for(int y = 0; y < 4; y++)
+                {
+                    inputs[count] = (int) Math.Log(gameField[x, y], 2);
+                    count++;
+                }
+
+            return inputs;
         }
     }
 }

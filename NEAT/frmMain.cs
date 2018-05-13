@@ -1,4 +1,5 @@
 ﻿using NEAT.NEAT;
+using NEAT.Utils;
 using System;
 using System.Windows.Forms;
 
@@ -41,7 +42,6 @@ namespace NEAT
         private void btnTrain_Click(object sender, EventArgs e)
         {
             _neat = new NeatManager(_game);
-            _neat.train();
         }
 
         private void btnPlay_Click(object sender, EventArgs e)
