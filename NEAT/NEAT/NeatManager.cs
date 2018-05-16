@@ -36,7 +36,7 @@ namespace NEAT.NEAT
             for (int i = 0; i < 4; i++)
                 moves[i] = 0;
 
-            trainGenerations(100);
+            trainGenerations(10);
         }
         public int getNextInnovationNumber()
         {
@@ -78,7 +78,7 @@ namespace NEAT.NEAT
                 Console.WriteLine(moves[i]);
 
             // Run generation
-            // demoGenome(bestGenome);
+            demoGenome(bestGenome);
         }
 
         public double runGenome(Genome genome)

@@ -45,27 +45,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Utils\Chart.cs" />
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="game2048.cs">
+    <Compile Include="Simulations\2048.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="game2048.Designer.cs">
-      <DependentUpon>game2048.cs</DependentUpon>
+    <Compile Include="Simulations\2048.Designer.cs">
+      <DependentUpon>2048.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameManager.cs" />
-    <Compile Include="gameSnake.cs">
+    <Compile Include="Simulations\GameManager.cs" />
+    <Compile Include="Simulations\gameSnake.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="gameSnake.Designer.cs">
+    <Compile Include="Simulations\gameSnake.Designer.cs">
       <DependentUpon>gameSnake.cs</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="InfoManager.cs" />
+    <Compile Include="Utils\InfoManager.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="NEAT\Backtrack.cs" />
     <Compile Include="NEAT\Models\Connection.cs" />
@@ -83,8 +84,8 @@
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="game2048.resx">
-      <DependentUpon>game2048.cs</DependentUpon>
+    <EmbeddedResource Include="Simulations\2048.resx">
+      <DependentUpon>2048.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
