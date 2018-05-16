@@ -92,9 +92,7 @@ namespace NEAT.NEAT
             _game = new game2048();
             _game.initGame();
 
-            int sameMoves = 0;
             int prevScore = 0;
-            game2048.Direction prevMove = game2048.Direction.Down;
 
             while(_game.state == game2048.GameState.Playing)
             {
@@ -127,16 +125,8 @@ namespace NEAT.NEAT
                     //moves[3]++;
                 }
 
-                if (prevMove == move && prevScore == _game.score)
-                    sameMoves++;
-                else
-                    sameMoves = 0;
-
-                if (sameMoves > 10)
-                    _game.state = game2048.GameState.GameOver;
-
                 _game.moveTiles(move);
-                prevMove = move;
+
                 prevScore = _game.score;
             }
 

@@ -22,6 +22,10 @@ namespace NEAT
         public enum Direction { Up, Down, Left, Right };
         public enum GameState { Playing, GameOver };
 
+        private Direction _prevMove;
+        private int _sameMoves = 0;
+        private int[,] _prevField = new int[4, 4];
+
         public game2048()
         {
             InitializeComponent();
@@ -279,29 +283,29 @@ namespace NEAT
                         {
                             for (int k = j + 1; k < 4; k++)
                             {
-                                if (gameField[i,k] == 1)
+                                if (gameField[i, k] == 1)
                                 {
                                     continue;
                                 }
-                                else if (gameField[i,k] == gameField[i,j])
+                                else if (gameField[i, k] == gameField[i, j])
                                 {
-                                    gameField[i,j] *= 2;
-                                    score += gameField[i,j];
-                                    gameField[i,k] = 1;
+                                    gameField[i, j] *= 2;
+                                    score += gameField[i, j];
+                                    gameField[i, k] = 1;
                                     addTile = true;
                                     break;
                                 }
                                 else
                                 {
-                                    if (gameField[i,j] == 1 && gameField[i,k] != 1)
+                                    if (gameField[i, j] == 1 && gameField[i, k] != 1)
                                     {
-                                        gameField[i,j] = gameField[i,k];
-                                        gameField[i,k] = 1;
+                                        gameField[i, j] = gameField[i, k];
+                                        gameField[i, k] = 1;
                                         j--;
                                         addTile = true;
                                         break;
                                     }
-                                    else if (gameField[i,j] != 1)
+                                    else if (gameField[i, j] != 1)
                                     {
                                         break;
                                     }
@@ -318,29 +322,29 @@ namespace NEAT
                         {
                             for (int k = j - 1; k >= 0; k--)
                             {
-                                if (gameField[i,k] == 1)
+                                if (gameField[i, k] == 1)
                                 {
                                     continue;
                                 }
-                                else if (gameField[i,k] == gameField[i,j])
+                                else if (gameField[i, k] == gameField[i, j])
                                 {
-                                    gameField[i,j] *= 2;
-                                    score += gameField[i,j];
-                                    gameField[i,k] = 1;
+                                    gameField[i, j] *= 2;
+                                    score += gameField[i, j];
+                                    gameField[i, k] = 1;
                                     addTile = true;
                                     break;
                                 }
                                 else
                                 {
-                                    if (gameField[i,j] == 1 && gameField[i,k] != 1)
+                                    if (gameField[i, j] == 1 && gameField[i, k] != 1)
                                     {
-                                        gameField[i,j] = gameField[i,k];
-                                        gameField[i,k] = 1;
+                                        gameField[i, j] = gameField[i, k];
+                                        gameField[i, k] = 1;
                                         j++;
                                         addTile = true;
                                         break;
                                     }
-                                    else if (gameField[i,j] != 1)
+                                    else if (gameField[i, j] != 1)
                                     {
                                         break;
                                     }
@@ -357,29 +361,29 @@ namespace NEAT
                         {
                             for (int k = i + 1; k < 4; k++)
                             {
-                                if (gameField[k,j] == 1)
+                                if (gameField[k, j] == 1)
                                 {
                                     continue;
                                 }
-                                else if (gameField[k,j] == gameField[i,j])
+                                else if (gameField[k, j] == gameField[i, j])
                                 {
-                                    gameField[i,j] *= 2;
-                                    score += gameField[i,j];
-                                    gameField[k,j] = 1;
+                                    gameField[i, j] *= 2;
+                                    score += gameField[i, j];
+                                    gameField[k, j] = 1;
                                     addTile = true;
                                     break;
                                 }
                                 else
                                 {
-                                    if (gameField[i,j] == 1 && gameField[k,j] != 1)
+                                    if (gameField[i, j] == 1 && gameField[k, j] != 1)
                                     {
-                                        gameField[i,j] = gameField[k,j];
-                                        gameField[k,j] = 1;
+                                        gameField[i, j] = gameField[k, j];
+                                        gameField[k, j] = 1;
                                         i--;
                                         addTile = true;
                                         break;
                                     }
-                                    else if (gameField[i,j] != 1)
+                                    else if (gameField[i, j] != 1)
                                     {
                                         break;
                                     }
@@ -396,29 +400,29 @@ namespace NEAT
                         {
                             for (int k = i - 1; k >= 0; k--)
                             {
-                                if (gameField[k,j] == 1)
+                                if (gameField[k, j] == 1)
                                 {
                                     continue;
                                 }
-                                else if (gameField[k,j] == gameField[i,j])
+                                else if (gameField[k, j] == gameField[i, j])
                                 {
-                                    gameField[i,j] *= 2;
-                                    score += gameField[i,j];
-                                    gameField[k,j] = 1;
+                                    gameField[i, j] *= 2;
+                                    score += gameField[i, j];
+                                    gameField[k, j] = 1;
                                     addTile = true;
                                     break;
                                 }
                                 else
                                 {
-                                    if (gameField[i,j] == 1 && gameField[k,j] != 1)
+                                    if (gameField[i, j] == 1 && gameField[k, j] != 1)
                                     {
-                                        gameField[i,j] = gameField[k,j];
-                                        gameField[k,j] = 1;
+                                        gameField[i, j] = gameField[k, j];
+                                        gameField[k, j] = 1;
                                         i++;
                                         addTile = true;
                                         break;
                                     }
-                                    else if (gameField[i,j] != 1)
+                                    else if (gameField[i, j] != 1)
                                     {
                                         break;
                                     }
@@ -429,58 +433,82 @@ namespace NEAT
                     break;
             }
 
-            if(addTile)
+            if (addTile)
                 randomPiece();
 
             if (score > best)
                 best = score;
 
+            if (_prevMove == direction && fieldSame())
+                _sameMoves++;
+            else
+                _sameMoves = 0;
+
             checkGameOver();
+
+            _prevMove = direction;
+            for (int x = 0; x < 4; x++)
+                for (int y = 0; y < 4; y++)
+                    _prevField[x, y] = gameField[x, y];
 
             draw();
         }
 
+        public bool fieldSame()
+        {
+            for (int x = 0; x < 4; x++)
+                for (int y = 0; y < 4; y++)
+                    if (_prevField[x, y] != gameField[x, y])
+                        return false;
+
+            return true;
+        }
+
         public void checkGameOver()
         {
-            for (int i = 0; i < 4; i++)
+            if (_sameMoves < 5)
             {
-                for (int j = 0; j < 4; j++)
+
+                for (int i = 0; i < 4; i++)
                 {
-                    if (i - 1 >= 0)
+                    for (int j = 0; j < 4; j++)
                     {
-                        if (gameField[i - 1,j] == gameField[i,j])
+                        if (i - 1 >= 0)
+                        {
+                            if (gameField[i - 1, j] == gameField[i, j])
+                            {
+                                return;
+                            }
+                        }
+
+                        if (i + 1 < 4)
+                        {
+                            if (gameField[i + 1, j] == gameField[i, j])
+                            {
+                                return;
+                            }
+                        }
+
+                        if (j - 1 >= 0)
+                        {
+                            if (gameField[i, j - 1] == gameField[i, j])
+                            {
+                                return;
+                            }
+                        }
+
+                        if (j + 1 < 4)
+                        {
+                            if (gameField[i, j + 1] == gameField[i, j])
+                            {
+                                return;
+                            }
+                        }
+
+                        if (gameField[i, j] == 1)
                         {
                             return;
                         }
-                    }
-
-                    if (i + 1 < 4)
-                    {
-                        if (gameField[i + 1,j] == gameField[i,j])
-                        {
-                            return;
-                        }
-                    }
-
-                    if (j - 1 >= 0)
-                    {
-                        if (gameField[i,j - 1] == gameField[i,j])
-                        {
-                            return;
-                        }
-                    }
-
-                    if (j + 1 < 4)
-                    {
-                        if (gameField[i,j + 1] == gameField[i,j])
-                        {
-                            return;
-                        }
-                    }
-
-                    if (gameField[i,j] == 1)
-                    {
-                        return;
                     }
                 }
             }
