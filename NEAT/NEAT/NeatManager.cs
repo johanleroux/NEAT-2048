@@ -53,6 +53,9 @@ namespace NEAT.NEAT
             // Initialize population
             InfoManager.addLine("Initializing population");
             this.popManager.initialize(populationSize);
+
+            // Reset Feedback
+            Feedback.clearFitnessPerGeneration();
             
             // Run for g generations
             for(int g = 1; g <= generations; g++)
@@ -67,6 +70,8 @@ namespace NEAT.NEAT
                     bestGeneration = g;
                     highestFitness = bestGenome.getFitness();
                 }
+
+                Feedback.addFitnessPerGeneration((int) Math.Round(best.getFitness()));
 
                 InfoManager.addLine("Generation " + g + " built with a fitness score of " + best.getFitness());
                 InfoManager.clearLine();
