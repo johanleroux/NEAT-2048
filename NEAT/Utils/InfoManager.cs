@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace NEAT
+namespace NEAT.Utils
 {
     public static class InfoManager
     {

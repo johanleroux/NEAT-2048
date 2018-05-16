@@ -1,15 +1,19 @@
 ﻿using NEAT.NEAT;
 using NEAT.Utils;
 using System;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace NEAT
 {
-    public partial class frmMain : Form
+    public partial class Main : Form
     {
         NeatManager _neat;
+        Thread _neatThread;
+        ChartForm _chartForm;
         String _game;
-        public frmMain()
+
+        public Main()
         {
             InitializeComponent();
             
@@ -41,12 +45,49 @@ namespace NEAT
 
         private void btnTrain_Click(object sender, EventArgs e)
         {
+            btnTrain.Text = "Training";
+            btnTrain.Enabled = false;
+            btnPlay.Enabled = false;
+            cbFeedback.Enabled = false;
+            if (_chartForm != null)
+            {
+                _chartForm.Hide();
+                _chartForm.Dispose();
+            }
+
+            //_neatThread = new Thread(new ThreadStart(trainAI));
+            //_neatThread.Start();
+            trainAI();
+
+            btnTrain.Text = "Train";
+            btnTrain.Enabled = true;
+            btnPlay.Enabled = true;
+            cbFeedback.Enabled = true;
+        }
+
+        private void trainAI()
+        {
             _neat = new NeatManager(_game);
         }
 
         private void btnPlay_Click(object sender, EventArgs e)
         {
             GameManager.load(_game);
+        }
+
+        private void cbFeedback_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!cbFeedback.Checked)
+            {
+                _chartForm.Hide();
+                _chartForm.Dispose();
+            }
+            else
+            {
+                _chartForm = new ChartForm();
+                _chartForm.StartPosition = FormStartPosition.CenterParent;
+                _chartForm.Show();
+            }
         }
     }
 }

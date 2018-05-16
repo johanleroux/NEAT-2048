@@ -1,6 +1,6 @@
 ﻿namespace NEAT
 {
-    partial class frmMain
+    partial class Main
     {
         /// <summary>
         /// Required designer variable.
@@ -34,6 +34,7 @@
             this.btnTrain = new System.Windows.Forms.Button();
             this.btnPlay = new System.Windows.Forms.Button();
             this.rtxtInformation = new System.Windows.Forms.RichTextBox();
+            this.cbFeedback = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // lblGame
@@ -96,18 +97,31 @@
             this.rtxtInformation.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtxtInformation.Location = new System.Drawing.Point(261, 12);
+            this.rtxtInformation.Location = new System.Drawing.Point(168, 12);
             this.rtxtInformation.Name = "rtxtInformation";
             this.rtxtInformation.ReadOnly = true;
-            this.rtxtInformation.Size = new System.Drawing.Size(550, 337);
+            this.rtxtInformation.Size = new System.Drawing.Size(660, 337);
             this.rtxtInformation.TabIndex = 6;
             this.rtxtInformation.Text = "";
             // 
-            // frmMain
+            // cbFeedback
+            // 
+            this.cbFeedback.AutoSize = true;
+            this.cbFeedback.Enabled = false;
+            this.cbFeedback.Location = new System.Drawing.Point(15, 332);
+            this.cbFeedback.Name = "cbFeedback";
+            this.cbFeedback.Size = new System.Drawing.Size(111, 17);
+            this.cbFeedback.TabIndex = 8;
+            this.cbFeedback.Text = "Display Feedback";
+            this.cbFeedback.UseVisualStyleBackColor = true;
+            this.cbFeedback.CheckedChanged += new System.EventHandler(this.cbFeedback_CheckedChanged);
+            // 
+            // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(834, 361);
+            this.Controls.Add(this.cbFeedback);
             this.Controls.Add(this.rtxtInformation);
             this.Controls.Add(this.btnPlay);
             this.Controls.Add(this.btnTrain);
@@ -115,7 +129,7 @@
             this.Controls.Add(this.cmbGames);
             this.Controls.Add(this.lblGame);
             this.MinimumSize = new System.Drawing.Size(650, 400);
-            this.Name = "frmMain";
+            this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AI NEAT - Control Panel";
             this.Load += new System.EventHandler(this.frmMain_Load);
@@ -132,6 +146,7 @@
         private System.Windows.Forms.Button btnTrain;
         private System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.RichTextBox rtxtInformation;
+        private System.Windows.Forms.CheckBox cbFeedback;
     }
 }
 

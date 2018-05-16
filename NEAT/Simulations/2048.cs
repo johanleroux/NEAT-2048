@@ -1,4 +1,5 @@
 ﻿using NEAT.NEAT.Models;
+using NEAT.Utils;
 using System;
 using System.Drawing;
 using System.Drawing.Text;
@@ -53,12 +54,8 @@ namespace NEAT
             gameField = new int[4, 4];
 
             for (int i = 0; i < 4; i++)
-            {
                 for (int j = 0; j < 4; j++)
-                {
                     gameField[i, j] = 1;
-                }
-            }
 
             randomPiece();
             randomPiece();
