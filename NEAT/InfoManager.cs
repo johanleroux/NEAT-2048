@@ -14,6 +14,8 @@ namespace NEAT
             textBox.AppendText(line + Environment.NewLine);
             // Console.WriteLine(line);
 
+            limitLines();
+
             textBox.SelectionStart = textBox.Text.Length;
             textBox.ScrollToCaret();
         }
@@ -21,6 +23,26 @@ namespace NEAT
         public static void clearLine()
         {
             addLine("");
+        }
+
+        public static void limitLines()
+        {
+            int maxLines = 500;
+
+            if (textBox.Lines.Length > maxLines)
+            {
+                string[] newLines = new string[maxLines];
+
+                Array.Copy(
+                    textBox.Lines,
+                    textBox.Lines.Length - maxLines,
+                    newLines,
+                    0,
+                    maxLines
+                );
+
+                textBox.Lines = newLines;
+            }
         }
     }
 }
