@@ -22,7 +22,7 @@ namespace NEAT.NEAT
 
         public int[] moves = new int[4];
 
-        public NeatManager(String game)
+        public NeatManager(String game, int nGenerations)
         {
             popManager = new PopulationManager(this);
 
@@ -37,7 +37,7 @@ namespace NEAT.NEAT
             for (int i = 0; i < 4; i++)
                 moves[i] = 0;
 
-            trainGenerations(10);
+            trainGenerations(nGenerations);
         }
         public int getNextInnovationNumber()
         {
