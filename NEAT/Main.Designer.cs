@@ -35,6 +35,9 @@
             this.btnPlay = new System.Windows.Forms.Button();
             this.rtxtInformation = new System.Windows.Forms.RichTextBox();
             this.cbFeedback = new System.Windows.Forms.CheckBox();
+            this.lNGenerations = new System.Windows.Forms.Label();
+            this.nGenerations = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.nGenerations)).BeginInit();
             this.SuspendLayout();
             // 
             // lblGame
@@ -73,7 +76,7 @@
             // btnTrain
             // 
             this.btnTrain.Enabled = false;
-            this.btnTrain.Location = new System.Drawing.Point(12, 107);
+            this.btnTrain.Location = new System.Drawing.Point(12, 139);
             this.btnTrain.Name = "btnTrain";
             this.btnTrain.Size = new System.Drawing.Size(150, 23);
             this.btnTrain.TabIndex = 3;
@@ -84,7 +87,7 @@
             // btnPlay
             // 
             this.btnPlay.Enabled = false;
-            this.btnPlay.Location = new System.Drawing.Point(12, 136);
+            this.btnPlay.Location = new System.Drawing.Point(12, 189);
             this.btnPlay.Name = "btnPlay";
             this.btnPlay.Size = new System.Drawing.Size(150, 23);
             this.btnPlay.TabIndex = 4;
@@ -116,11 +119,44 @@
             this.cbFeedback.UseVisualStyleBackColor = true;
             this.cbFeedback.CheckedChanged += new System.EventHandler(this.cbFeedback_CheckedChanged);
             // 
+            // lNGenerations
+            // 
+            this.lNGenerations.AutoSize = true;
+            this.lNGenerations.Location = new System.Drawing.Point(12, 97);
+            this.lNGenerations.Name = "lNGenerations";
+            this.lNGenerations.Size = new System.Drawing.Size(116, 13);
+            this.lNGenerations.TabIndex = 10;
+            this.lNGenerations.Text = "Number of Generations";
+            // 
+            // nGenerations
+            // 
+            this.nGenerations.Location = new System.Drawing.Point(12, 113);
+            this.nGenerations.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+            this.nGenerations.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.nGenerations.Name = "nGenerations";
+            this.nGenerations.Size = new System.Drawing.Size(150, 20);
+            this.nGenerations.TabIndex = 11;
+            this.nGenerations.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(834, 361);
+            this.Controls.Add(this.nGenerations);
+            this.Controls.Add(this.lNGenerations);
             this.Controls.Add(this.cbFeedback);
             this.Controls.Add(this.rtxtInformation);
             this.Controls.Add(this.btnPlay);
@@ -133,6 +169,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AI NEAT - Control Panel";
             this.Load += new System.EventHandler(this.frmMain_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.nGenerations)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -147,6 +184,8 @@
         private System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.RichTextBox rtxtInformation;
         private System.Windows.Forms.CheckBox cbFeedback;
+        private System.Windows.Forms.Label lNGenerations;
+        private System.Windows.Forms.NumericUpDown nGenerations;
     }
 }
 

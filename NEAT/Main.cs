@@ -9,7 +9,6 @@ namespace NEAT
     public partial class Main : Form
     {
         NeatManager _neat;
-        Thread _neatThread;
         ChartForm _chartForm;
         String _game;
 
@@ -55,19 +54,12 @@ namespace NEAT
                 _chartForm.Dispose();
             }
 
-            //_neatThread = new Thread(new ThreadStart(trainAI));
-            //_neatThread.Start();
-            trainAI();
+            _neat = new NeatManager(_game, (int)nGenerations.Value);
 
             btnTrain.Text = "Train";
             btnTrain.Enabled = true;
             btnPlay.Enabled = true;
             cbFeedback.Enabled = true;
-        }
-
-        private void trainAI()
-        {
-            _neat = new NeatManager(_game);
         }
 
         private void btnPlay_Click(object sender, EventArgs e)
