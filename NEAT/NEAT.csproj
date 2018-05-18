@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Simulations\XOR.cs" />
     <Compile Include="Utils\Feedback.cs" />
     <Compile Include="ChartForm.cs">
       <SubType>Form</SubType>
@@ -66,12 +67,6 @@
       <DependentUpon>2048.cs</DependentUpon>
     </Compile>
     <Compile Include="Simulations\GameManager.cs" />
-    <Compile Include="Simulations\gameSnake.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Simulations\gameSnake.Designer.cs">
-      <DependentUpon>gameSnake.cs</DependentUpon>
-    </Compile>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Utils\InfoManager.cs" />
     <Compile Include="Config.cs" />

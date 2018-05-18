@@ -20,6 +20,11 @@ namespace NEAT.Utils
             textBox.ScrollToCaret();
         }
 
+        public static void clear()
+        {
+            textBox.Clear();
+        }
+
         public static void clearLine()
         {
             addLine("");

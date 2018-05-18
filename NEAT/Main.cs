@@ -54,6 +54,7 @@ namespace NEAT
                 _chartForm.Dispose();
             }
 
+            InfoManager.clear();
             _neat = new NeatManager(_game, (int)nGenerations.Value);
 
             btnTrain.Text = "Train";

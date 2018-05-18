@@ -15,20 +15,21 @@ namespace NEAT.NEAT
         public const int    EXTINCTION_GENERATIONS = 3;
         public const double EXTINCTION_CANDIDATE = 0.4f;
 
-        public const double MUTATION_NEW_NODE_CHANCE = 0.03f;
-        public const double MUTATION_WEIGHT_CHANCE = 0.8f;
-        public const double MUTATION_WEIGHT_CHANCE_RANDOM_RANGE = 5.0f;
-        public const double MUTATION_NEW_CONNECTION_CHANCE = 0.05f;
-        public const double MUTATION_WEIGHT_RANDOM_CHANCE = 0.10f;
-        public const double MUTATION_WEIGHT_MAX_DISTURBANCE = 0.25f;
+        public const double MUTATION_NEW_NODE_CHANCE = 0.003f;
+        public const double MUTATION_NEW_CONNECTION_CHANCE = 0.3f;
 
-        public const double SPECIES_COMPATIBILTY_DISTANCE = 0.8f;
+        public const double MUTATION_WEIGHT_CHANCE = 0.7f;
+        public const double MUTATION_WEIGHT_CHANCE_RANDOM_RANGE = 3.0f;
+        public const double MUTATION_WEIGHT_RANDOM_CHANCE = 0.10f;
+        public const double MUTATION_WEIGHT_MAX_DISTURBANCE = 0.1f;
+
+        public const double SPECIES_COMPATIBILTY_DISTANCE = 1.25f;
 
         public const double DISTANCE_EXCESS_WEIGHT   = 1.0f;
         public const double DISTANCE_DISJOINT_WEIGHT = 1.0f;
         public const double DISTANCE_WEIGHTS_WEIGHT  = 0.4f;
 
-        public const double GENERATION_ELIMINATION_PERCENTAGE = 0.9f;
+        public const double GENERATION_ELIMINATION_PERCENTAGE = 0.85f;
 
         public const double BREED_CROSS_CHANCE = 0.75f;
 

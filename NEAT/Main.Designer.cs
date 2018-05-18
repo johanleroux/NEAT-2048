@@ -55,8 +55,7 @@
             this.cmbGames.FormattingEnabled = true;
             this.cmbGames.Items.AddRange(new object[] {
             "2048",
-            "Minesweeper",
-            "Snake"});
+            "XOR"});
             this.cmbGames.Location = new System.Drawing.Point(12, 25);
             this.cmbGames.Name = "cmbGames";
             this.cmbGames.Size = new System.Drawing.Size(150, 21);
