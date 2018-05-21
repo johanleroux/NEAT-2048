@@ -193,7 +193,7 @@ namespace NEAT.NEAT.Models
 
                     if ((dis1 && !dis2) || (!dis1 && dis2))
                     {
-                        bool disabled = RandomUtil.success(Config.GENE_DISABLE_CHANCE);
+                        bool disabled = RandomUtil.success(Config.NEURON_DISABLE_CHANCE);
                         synapse.enabled = !disabled;
                     }
                 }

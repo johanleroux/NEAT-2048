@@ -16,13 +16,13 @@ namespace NEAT.NEAT
 
         public void mutate()
         {
-            if (RandomUtil.success(Config.MUTATION_NEW_NODE_CHANCE))
+            if (RandomUtil.success(Config.MUTATION_CHANCE_NEW_NEURON))
                 addNewNeuron();
 
-            if (RandomUtil.success(Config.MUTATION_NEW_CONNECTION_CHANCE))
+            if (RandomUtil.success(Config.MUTATION_CHANCE_NEW_SYNAPSE))
                 addNewSynapse();
 
-            if (RandomUtil.success(Config.MUTATION_WEIGHT_CHANCE))
+            if (RandomUtil.success(Config.MUTATION_CHANCE_MUTATE_SYNAPSE))
                 mutateSynapses();
         }
 
@@ -78,11 +78,11 @@ namespace NEAT.NEAT
          */
         private void mutateSynapses()
         {
-            if (RandomUtil.success(Config.MUTATION_WEIGHT_RANDOM_CHANCE))
+            if (RandomUtil.success(Config.SYNAPSE_WEIGHT_RANDOM_CHANCE))
             {
                 foreach (Synapse synapse in this.genome.getSynapses())
                 {
-                    double range = Config.MUTATION_WEIGHT_CHANCE_RANDOM_RANGE;
+                    double range = Config.SYNAPSE_WEIGHT_RANGE;
                     synapse.weight = RandomUtil.doubleRand((range * -1), range);
                 }
             }
@@ -90,7 +90,7 @@ namespace NEAT.NEAT
             {
                 foreach (Synapse synapse in this.genome.getSynapses())
                 {
-                    double disturbance = Config.MUTATION_WEIGHT_MAX_DISTURBANCE;
+                    double disturbance = Config.SYNAPSE_WEIGHT_PERTRUDE;
                     double uniform = RandomUtil.doubleRand((disturbance * -1), disturbance);
                     synapse.weight = synapse.weight + uniform;
                 }

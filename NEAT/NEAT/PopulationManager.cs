@@ -35,7 +35,7 @@ namespace NEAT.NEAT
             for (int i = 0; i < outputs.Length; i++)
                 outputs[i] = inputs.Length + i + 1;
 
-            double dist = Config.MUTATION_WEIGHT_CHANCE_RANDOM_RANGE;
+            double dist = Config.SYNAPSE_WEIGHT_RANGE;
             Genome genome = new Genome(neat, null, inputs, outputs);
             for (int inNeuron = 1; inNeuron <= inputs.Length; inNeuron++)
             {
@@ -63,7 +63,7 @@ namespace NEAT.NEAT
                 Genome genome = init.clone();
                 foreach (Synapse synapse in genome.getSynapses())
                 {
-                    double dist = Config.MUTATION_WEIGHT_CHANCE_RANDOM_RANGE;
+                    double dist = Config.SYNAPSE_WEIGHT_RANGE;
                     synapse.weight = RandomUtil.doubleRand(-dist, dist);
                 }
                 this.currentPop.addGenome(ref genome);

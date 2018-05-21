@@ -52,7 +52,7 @@ namespace NEAT.NEAT.Models
 
         public bool isCompatible(ref Genome genome)
         {
-            return Genome.distance(this.candidate, genome) <= Config.SPECIES_COMPATIBILTY_DISTANCE;
+            return Genome.distance(this.candidate, genome) <= Config.SPECIES_COMPATIBLE_DISTANCE;
         }
 
         public void updateCandidate()
