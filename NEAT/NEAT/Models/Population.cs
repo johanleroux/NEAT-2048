@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace NEAT.NEAT.Models
 {
@@ -18,11 +14,13 @@ namespace NEAT.NEAT.Models
 
         public void addGenome(ref Genome genome)
         {
-            Species species = this.classify(ref genome);
+            Species species = this.assignSpecies(ref genome);
             species.genomes.Add(genome);
         }
 
-        private Species classify(ref Genome genome)
+        // Assign an appropriate Genome to a Species
+        // or create a new Species
+        private Species assignSpecies(ref Genome genome)
         {
             foreach (Species existing in this.species)
             {

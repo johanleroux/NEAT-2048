@@ -89,7 +89,7 @@ namespace NEAT.NEAT.Models
             foreach (Genome g in best)
                 g.getFitness();
 
-            //best.OrderBy(o => o.getFitness());
+            best.OrderBy(o => o.getFitness());
             return best;
         }
     }

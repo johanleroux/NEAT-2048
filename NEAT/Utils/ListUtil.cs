@@ -5,7 +5,7 @@ namespace NEAT.Utils
 {
     public static class ListUtil
     {
-        public static bool equals(List<Connection> a, List<Connection> b)
+        public static bool equals(List<ZeroSynapse> a, List<ZeroSynapse> b)
         {
             if (a.Count != b.Count)
                 return false;

@@ -1,9 +1,5 @@
 ﻿using NEAT.NEAT.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NEAT.Simulations
 {
@@ -32,6 +28,9 @@ namespace NEAT.Simulations
 
             return outputs;
         }
+
+        // REF: [GITHUB] SanderGielisse XOR implementation for NEAT
+        // (https://github.com/SanderGielisse/Mythan/blob/master/src/examples/xor/XOR.java)
         public double calculate(Genome genome)
         {
             double off = 0;
@@ -44,7 +43,7 @@ namespace NEAT.Simulations
 
                 off += Math.Abs(actualOut - expectedOut);
             }
-            // subtract from 4 and square to increase fitness proportionally
+
             double fitness = 4 - off;
 
             if (fitness < 0)

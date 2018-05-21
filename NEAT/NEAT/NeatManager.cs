@@ -2,7 +2,6 @@
 using NEAT.Simulations;
 using NEAT.Utils;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
@@ -91,7 +90,7 @@ namespace NEAT.NEAT
             }
 
             InfoManager.addLine("Best generation " + bestGeneration + " with a fitness score of " + highestFitness + " from genome " + bestGenome.getID());
-            InfoManager.addLine("The system had " + bestGenome.getHiddenNodes().Count + " hidden nodes and " + bestGenome.getActiveConnections().Count() + " enabled connections");
+            InfoManager.addLine("The system had " + bestGenome.getHiddenNeurons().Count + " hidden neurons and " + bestGenome.getActiveSynapses().Count() + " enabled synapses");
 
             if(_gameName == "2048")
                 demo2048(bestGenome);

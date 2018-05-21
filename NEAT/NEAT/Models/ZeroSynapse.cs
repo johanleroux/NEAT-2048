@@ -1,13 +1,11 @@
-﻿using System;
-
-namespace NEAT.NEAT.Models
+﻿namespace NEAT.NEAT.Models
 {
-    public class Connection
+    public class ZeroSynapse
     {
         public readonly int from;
         public readonly int to;
 
-        public Connection(int from, int to)
+        public ZeroSynapse(int from, int to)
         {
             this.from = from;
             this.to = to;

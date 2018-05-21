@@ -71,7 +71,7 @@
     <Compile Include="Utils\InfoManager.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="NEAT\Backtrack.cs" />
-    <Compile Include="NEAT\Models\Connection.cs" />
+    <Compile Include="NEAT\Models\ZeroSynapse.cs" />
     <Compile Include="NEAT\Models\Genome.cs" />
     <Compile Include="NEAT\Models\Population.cs" />
     <Compile Include="NEAT\MutationManager.cs" />

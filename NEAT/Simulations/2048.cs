@@ -1,5 +1,4 @@
-﻿using NEAT.NEAT.Models;
-using NEAT.Utils;
+﻿using NEAT.Utils;
 using System;
 using System.Drawing;
 using System.Drawing.Text;
@@ -274,6 +273,8 @@ namespace NEAT
             bool addTile = false;
             timer.Enabled = true;
 
+            // REF: [GITHUB] jakowskidev 2048 movement algorithm logic
+            // https://github.com/jakowskidev/u2048_Jakowski/blob/master/u2048/Game.cs
             switch (direction)
             {
                 case Direction.Up:
@@ -467,48 +468,29 @@ namespace NEAT
         public void checkGameOver()
         {
             if (_sameMoves < 5)
-            {
-
+            { 
                 for (int i = 0; i < 4; i++)
-                {
+                { 
                     for (int j = 0; j < 4; j++)
-                    {
+                    { 
                         if (i - 1 >= 0)
-                        {
                             if (gameField[i - 1, j] == gameField[i, j])
-                            {
                                 return;
-                            }
-                        }
 
                         if (i + 1 < 4)
-                        {
                             if (gameField[i + 1, j] == gameField[i, j])
-                            {
                                 return;
-                            }
-                        }
 
                         if (j - 1 >= 0)
-                        {
                             if (gameField[i, j - 1] == gameField[i, j])
-                            {
                                 return;
-                            }
-                        }
 
                         if (j + 1 < 4)
-                        {
                             if (gameField[i, j + 1] == gameField[i, j])
-                            {
                                 return;
-                            }
-                        }
 
                         if (gameField[i, j] == 1)
-                        {
                             return;
-                        }
                     }
                 }
             }

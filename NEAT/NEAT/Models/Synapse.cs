@@ -38,11 +38,10 @@ namespace NEAT.NEAT.Models
         public String toString()
         {
             return "Synapse"
-                + "[innovationNumber=" + this.innovationNumber
+                + "[#" + this.innovationNumber
                 + ", from=" + this.from
                 + ", to=" + this.to
                 + ", weight=" + this.weight
-                + ", enabled=" + this.enabled
                 + "]";
         }
     }

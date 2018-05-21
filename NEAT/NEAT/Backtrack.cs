@@ -7,7 +7,7 @@ namespace NEAT.NEAT
     class Backtrack
     {
         private Genome genome;
-        private Dictionary<int, double> nodeInputValues = new Dictionary<int, double>();
+        private Dictionary<int, double> neuronInputValues = new Dictionary<int, double>();
 
         public Backtrack(Genome genome, double[] inputs)
         {
@@ -17,8 +17,8 @@ namespace NEAT.NEAT
                 throw new Exception("Input size " + inputs.Length + " not equal to genome inputs length" + genome.getInputs());
 
             int i = 0;
-            foreach (int inputNode in this.genome.getInputs())
-                this.nodeInputValues.Add(inputNode, inputs[i++]);
+            foreach (int inputNeuron in this.genome.getInputs())
+                this.neuronInputValues.Add(inputNeuron, inputs[i++]);
         }
 
         public double[] calculateOutput()
@@ -28,32 +28,32 @@ namespace NEAT.NEAT
             int i = 0;
             double[] output = new double[this.genome.getOutputs().Length];
 
-            foreach (int outputNode in this.genome.getOutputs())
-                output[i++] = this.getOutput(outputNode, cache);
+            foreach (int outputNeuron in this.genome.getOutputs())
+                output[i++] = this.getOutput(outputNeuron, cache);
 
             return output;
         }
 
-        private double getOutput(int node, Dictionary<int, double> cache)
+        private double getOutput(int neuron, Dictionary<int, double> cache)
         {
-            if (cache.ContainsKey(node))
-                return cache[node];
+            if (cache.ContainsKey(neuron))
+                return cache[neuron];
 
             double sum = 0;
 
             foreach (Synapse synapse in this.genome.getSynapses())
             {
-                if (synapse.to == node && synapse.enabled)
+                if (synapse.to == neuron && synapse.enabled)
                 {
-                    if (this.genome.isInputNode(synapse.from))
-                        sum += this.nodeInputValues[synapse.from] * synapse.weight;
+                    if (this.genome.isInputNeuron(synapse.from))
+                        sum += this.neuronInputValues[synapse.from] * synapse.weight;
                     else
                         sum += this.getOutput(synapse.from, cache) * synapse.weight;
                 }
             }
 
             double d = activate(sum);
-            cache.Add(node, d);
+            cache.Add(neuron, d);
             return d;
         }
 

@@ -17,7 +17,7 @@ namespace NEAT.NEAT
         public void mutate()
         {
             if (RandomUtil.success(Config.MUTATION_NEW_NODE_CHANCE))
-                addNewNode();
+                addNewNeuron();
 
             if (RandomUtil.success(Config.MUTATION_NEW_CONNECTION_CHANCE))
                 addNewSynapse();
@@ -26,7 +26,13 @@ namespace NEAT.NEAT
                 mutateSynapses();
         }
 
-        private void addNewNode()
+        /**
+         * Split up a current synapse
+         * Add a new neuron between the two synapses
+         * Synapse into new neuron has a weight of 1
+         * Synapse going out from the new neuron has a weight of the previous connection
+         */
+        private void addNewNeuron()
         {
             Synapse randomSynapse = this.genome.getSynapses()[RandomUtil.integer(0, this.genome.getSynapses().Count - 1)];
             randomSynapse.enabled = true;
@@ -35,33 +41,41 @@ namespace NEAT.NEAT
             int to = randomSynapse.to;
             this.genome.neat.getNextInnovationNumber();
 
-            int newNodeId = (this.genome.getHighestNode() + 1);
-            this.genome.addSynapse(new Synapse(this.genome.neat.getNextInnovationNumber(), from, newNodeId, 1, true), null, null);
-            this.genome.addSynapse(new Synapse(this.genome.neat.getNextInnovationNumber(), newNodeId, to, randomSynapse.weight, true), null, null);
+            int newNeuronId = (this.genome.getHighestNeuron() + 1);
+            this.genome.addSynapse(new Synapse(this.genome.neat.getNextInnovationNumber(), from, newNeuronId, 1, true), null, null);
+            this.genome.addSynapse(new Synapse(this.genome.neat.getNextInnovationNumber(), newNeuronId, to, randomSynapse.weight, true), null, null);
         }
 
+        /**
+         * Add a synapse between two random neurons
+         * not currently connected
+         * add a random weight to the synapse
+         */
         private void addNewSynapse()
         {
-            List<Connection> currentConnections = this.genome.getAllConnections();
+            List<ZeroSynapse> currentSynapses = this.genome.getAllSynapses();
             int attempts = 0;
-            Connection testConnection = null;
+            ZeroSynapse possibleSynapse = null;
 
             do
             {
                 if (attempts++ > 40) return;
 
-                int from = genome.getNodes(true, true, false)[RandomUtil.integer(0, this.genome.getNodes(true, true, false).Count - 1)];
-                List<int> leftOver = this.genome.getNodes(false, true, true);
+                int from = genome.getNeurons(true, true, false)[RandomUtil.integer(0, this.genome.getNeurons(true, true, false).Count - 1)];
+                List<int> leftOver = this.genome.getNeurons(false, true, true);
 
                 if (leftOver.Count == 0) continue;
 
                 int to = leftOver[RandomUtil.integer(0, leftOver.Count - 1)];
-                testConnection = new Connection(from, to);
-            } while (((testConnection == null) || ((testConnection.from == testConnection.to) || (currentConnections.Contains(testConnection) || isRecurrent(testConnection)))));
+                possibleSynapse = new ZeroSynapse(from, to);
+            } while (((possibleSynapse == null) || ((possibleSynapse.from == possibleSynapse.to) || (currentSynapses.Contains(possibleSynapse) || isRecurrent(possibleSynapse)))));
 
-            genome.addSynapse(new Synapse(genome.neat.getNextInnovationNumber(), testConnection.from, testConnection.to, RandomUtil.integer(-1, 1), true), null, null);
+            genome.addSynapse(new Synapse(genome.neat.getNextInnovationNumber(), possibleSynapse.from, possibleSynapse.to, RandomUtil.integer(-1, 1), true), null, null);
         }
 
+        /*
+         * Mutate current synapse weights
+         */
         private void mutateSynapses()
         {
             if (RandomUtil.success(Config.MUTATION_WEIGHT_RANDOM_CHANCE))
@@ -84,10 +98,13 @@ namespace NEAT.NEAT
             }
         }
 
-        private bool isRecurrent(Connection with)
+        // REF: [GITHUB] SanderGielisse logic for looping
+        // and testing unconnected neurons
+        // (https://github.com/SanderGielisse/Mythan)
+        private bool isRecurrent(ZeroSynapse with)
         {
             Genome tmpGenome = this.genome.clone();
-            //  clone so we can change its genes without actually affecting the original genome
+
             if ((with != null))
             {
                 Synapse synapse = new Synapse((tmpGenome.getHighestInnovationNumber() + 1), with.from, with.to, 0, true);
@@ -95,32 +112,32 @@ namespace NEAT.NEAT
             }
 
             bool recc = false;
-            foreach (int hiddenNode in tmpGenome.getHiddenNodes())
-                if (this.isRecurrent(new List<int>(), ref tmpGenome, hiddenNode))
+            foreach (int hiddenNeuron in tmpGenome.getHiddenNeurons())
+                if (this.isRecurrent(new List<int>(), ref tmpGenome, hiddenNeuron))
                     recc = true;
 
             return recc;
         }
 
-        private bool isRecurrent(List<int> path, ref Genome genome, int node)
+        private bool isRecurrent(List<int> path, ref Genome genome, int neuron)
         {
-            if (path.Contains(node)) return true;
+            if (path.Contains(neuron)) return true;
 
-            path.Add(node);
+            path.Add(neuron);
             bool recc = false;
-            foreach (int from in getInputs(ref this.genome, node))
-                if (!this.genome.isInputNode(from))
+            foreach (int from in getInputs(ref this.genome, neuron))
+                if (!this.genome.isInputNeuron(from))
                     if (this.isRecurrent(path, ref this.genome, from))
                         recc = true;
 
             return recc;
         }
 
-        private List<int> getInputs(ref Genome genome, int node)
+        private List<int> getInputs(ref Genome genome, int neuron)
         {
             List<int> froms = new List<int>();
             foreach (Synapse synapse in this.genome.getSynapses())
-                if ((synapse.to == node))
+                if ((synapse.to == neuron))
                     froms.Add(synapse.from);
 
             return froms;

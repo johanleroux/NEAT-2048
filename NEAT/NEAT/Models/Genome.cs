@@ -16,12 +16,12 @@ namespace NEAT.NEAT.Models
         public Species species { get; private set; }
 
         private Dictionary<int, Synapse> synapses = new Dictionary<int, Synapse>();
-        private List<int> inputNodes = new List<int>();
-        private List<int> outputNodes = new List<int>();
+        private List<int> inputNeurons = new List<int>();
+        private List<int> outputNeurons = new List<int>();
 
         private double fitness = -1;
 
-        public Genome(NeatManager neat, Species species, int[] inputNodes, int[] outputNodes)
+        public Genome(NeatManager neat, Species species, int[] inputNeurons, int[] outputNeurons)
         {
             this.instanceID = Guid.NewGuid();
             this.neat = neat;
@@ -29,24 +29,24 @@ namespace NEAT.NEAT.Models
             this.species = species;
 
 
-            foreach (int inNode in inputNodes)
-                this.addInputNode(inNode);
+            foreach (int inNeuron in inputNeurons)
+                this.addInputNeuron(inNeuron);
 
-            foreach (int outNode in outputNodes)
-                this.addOutputNode(outNode);
+            foreach (int outNeuron in outputNeurons)
+                this.addOutputNeuron(outNeuron);
         }
 
         public Genome clone()
         {
-            Genome genome = new Genome(this.neat, this.species, this.inputNodes.ToArray(), this.outputNodes.ToArray());
+            Genome genome = new Genome(this.neat, this.species, this.inputNeurons.ToArray(), this.outputNeurons.ToArray());
 
             // clone the values of the synapses
             genome.synapses = new Dictionary<int, Synapse>();
             foreach (KeyValuePair<int, Synapse> synapse in this.synapses)
                 genome.synapses.Add(synapse.Key, synapse.Value);
 
-            genome.inputNodes = new List<int>(this.inputNodes);
-            genome.outputNodes = new List<int>(this.outputNodes);
+            genome.inputNeurons = new List<int>(this.inputNeurons);
+            genome.outputNeurons = new List<int>(this.outputNeurons);
 
             return genome;
         }
@@ -64,58 +64,58 @@ namespace NEAT.NEAT.Models
             this.species = species;
         }
 
-        public void addInputNode(int node)
+        public void addInputNeuron(int neuron)
         {
             if (this.fitness != -1)
                 throw new Exception("Training already begun");
 
-            if (this.inputNodes.Contains(node))
+            if (this.inputNeurons.Contains(neuron))
                 return;
 
-            this.inputNodes.Add(node);
+            this.inputNeurons.Add(neuron);
         }
 
-        public void addOutputNode(int node)
+        public void addOutputNeuron(int neuron)
         {
             if (this.fitness != -1)
                 throw new Exception("Training already begun");
 
-            if (this.outputNodes.Contains(node))
+            if (this.outputNeurons.Contains(neuron))
                 return;
 
-            this.outputNodes.Add(node);
+            this.outputNeurons.Add(neuron);
         }
 
         public int[] getInputs()
         {
-            return this.inputNodes.ToArray();
+            return this.inputNeurons.ToArray();
         }
 
         public int[] getOutputs()
         {
-            return this.outputNodes.ToArray();
+            return this.outputNeurons.ToArray();
         }
 
-        public List<int> getNodes(bool input, bool hidden, bool output)
+        public List<int> getNeurons(bool input, bool hidden, bool output)
         {
-            List<int> nodes = new List<int>();
+            List<int> neurons = new List<int>();
 
-            foreach(int node in getAllNodes())
+            foreach(int neuron in getAllNeurons())
             {
-                if (this.isInputNode(node) && !input)
+                if (this.isInputNeuron(neuron) && !input)
                     continue;
-                if (this.isHiddenNode(node) && !hidden)
+                if (this.isHiddenNeuron(neuron) && !hidden)
                     continue;
-                if (this.isOutputNode(node) && !output)
+                if (this.isOutputNeuron(neuron) && !output)
                     continue;
 
-                nodes.Add(node);
+                neurons.Add(neuron);
             }
 
-            return nodes;
+            return neurons;
         }
 
-        public List<int> getAllNodes()
+        public List<int> getAllNeurons()
         {
             List<int> ids = new List<int>();
             foreach (Synapse synapse in synapses.Values)
@@ -133,36 +133,36 @@ namespace NEAT.NEAT.Models
             return ids.OrderBy(o => o).ToList();
         }
 
-        public List<int> getHiddenNodes()
+        public List<int> getHiddenNeurons()
         {
-            List<int> nodes = new List<int>();
-            foreach (int node in getAllNodes())
+            List<int> neurons = new List<int>();
+            foreach (int neuron in getAllNeurons())
             {
-                if (isHiddenNode(node))
-                    nodes.Add(node);
+                if (isHiddenNeuron(neuron))
+                    neurons.Add(neuron);
             }
-            return nodes;
+            return neurons;
         }
 
-        public bool isInputNode(int node)
+        public bool isInputNeuron(int neuron)
         {
-            return this.inputNodes.Contains(node);
+            return this.inputNeurons.Contains(neuron);
         }
 
-        public bool isOutputNode(int node)
+        public bool isOutputNeuron(int neuron)
         {
-            return this.outputNodes.Contains(node);
+            return this.outputNeurons.Contains(neuron);
         }
 
-        public bool isHiddenNode(int node)
+        public bool isHiddenNeuron(int neuron)
         {
-            return !this.isInputNode(node) && !this.isOutputNode(node);
+            return !this.isInputNeuron(neuron) && !this.isOutputNeuron(neuron);
         }
 
-        public int getHighestNode()
+        public int getHighestNeuron()
         {
-            List<int> nodes = this.getAllNodes();
-            return nodes[nodes.Count - 1];
+            List<int> neurons = this.getAllNeurons();
+            return neurons[neurons.Count - 1];
         }
 
         public int getHighestInnovationNumber()
@@ -188,13 +188,9 @@ namespace NEAT.NEAT.Models
             {
                 if (parent1.hasSynapse(synapse.innovationNumber) && parent2.hasSynapse(synapse.innovationNumber))
                 {
-                    /**
-                     * There is a chance that a gene which is disabled in one of the parents is disabled.
-                     */
                     bool dis1 = !parent1.synapses[synapse.innovationNumber].enabled;
                     bool dis2 = !parent2.synapses[synapse.innovationNumber].enabled;
 
-                    // only one of them is disabled
                     if ((dis1 && !dis2) || (!dis1 && dis2))
                     {
                         bool disabled = RandomUtil.success(Config.GENE_DISABLE_CHANCE);
@@ -247,9 +243,11 @@ namespace NEAT.NEAT.Models
             return this.fitness;
         }
 
+        // REF: [GITHUB] SanderGielisse logic for distance
+        // between genomes (eg compatibility)
+        // (https://github.com/SanderGielisse/Mythan)
         public static double distance(Genome a, Genome b)
         {
-            // find the longest
             int aLength = a.getHighestInnovationNumber();
             int bLength = b.getHighestInnovationNumber();
 
@@ -270,8 +268,8 @@ namespace NEAT.NEAT.Models
             int shortestLength = shortest.getHighestInnovationNumber();
             int longestLength = longest.getHighestInnovationNumber();
 
-            double disjoint = 0; // use double so it won't be used as an int in the formula
-            double excess = 0; // use double so it won't be used as an int in the formula
+            double disjoint = 0;
+            double excess = 0;
 
             List<double> weights = new List<double>();
             for (int i = 0; i < longestLength; i++)
@@ -294,7 +292,6 @@ namespace NEAT.NEAT.Models
                 }
                 if (aa != null && bb != null)
                 {
-                    // matching gene
                     double distance = Math.Abs(aa.weight - bb.weight);
                     weights.Add(distance);
                 }
@@ -314,8 +311,7 @@ namespace NEAT.NEAT.Models
             double c1 = Config.DISTANCE_EXCESS_WEIGHT;
             double c2 = Config.DISTANCE_DISJOINT_WEIGHT;
             double c3 = Config.DISTANCE_WEIGHTS_WEIGHT;
-
-            // formula: d = (c1 * E) / N + (c2 * D) / N + c3 * W
+            
             double d = ((c1 * excess) / n) + ((c2 * disjoint) / n) + (c3 * averageWeightDistance);
             return d;
         }
@@ -345,31 +341,22 @@ namespace NEAT.NEAT.Models
             if (dominant.synapses.Count == 0 || other.synapses.Count == 0)
                 return null;
 
-            // find out how far they match
-            int sharedLength = -1;
-            for (int i = 1; ; i++)
+            int similarityNeurons = -1;
+            for (int i = 1; i < 100000; i++)
             {
-                if (i > 100000)
-                    throw new Exception();
-
                 if (dominant.hasSynapse(i) && other.hasSynapse(i))
-                {
-                    sharedLength = i;
-                }
-                else
-                {
-                    break;
-                }
+                    similarityNeurons = i;
             }
-            if (sharedLength == -1)
-                throw new Exception();
 
-            Genome newGenome = new Genome(neat, null, dominant.inputNodes.ToArray(), dominant.outputNodes.ToArray()); // inputs/outputs should match so it doesn't matter where we get it from
+            if (similarityNeurons == -1)
+                throw new Exception("No similarity between Genomes");
+
+            Genome newGenome = new Genome(neat, null, dominant.inputNeurons.ToArray(), dominant.outputNeurons.ToArray());
             for (int i = 1; i <= dominant.getHighestInnovationNumber(); i++)
             {
                 if (dominant.hasSynapse(i))
                 {
-                    int innovationNumber, inputNode, outputNode;
+                    int innovationNumber, inputNeuron, outputNeuron;
                     double weigth;
                     bool enabled;
 
@@ -380,16 +367,16 @@ namespace NEAT.NEAT.Models
                         if (r.Next(0, 1) == 1)
                         {
                             innovationNumber = dominant.synapses[i].innovationNumber;
-                            inputNode = dominant.synapses[i].from;
-                            outputNode = dominant.synapses[i].to;
+                            inputNeuron = dominant.synapses[i].from;
+                            outputNeuron = dominant.synapses[i].to;
                             weigth = dominant.synapses[i].weight;
                             enabled = dominant.synapses[i].enabled;
                         }
                         else
                         {
                             innovationNumber = other.synapses[i].innovationNumber;
-                            inputNode = other.synapses[i].from;
-                            outputNode = other.synapses[i].to;
+                            inputNeuron = other.synapses[i].from;
+                            outputNeuron = other.synapses[i].to;
                             weigth = other.synapses[i].weight;
                             enabled = other.synapses[i].enabled;
                         }
@@ -397,54 +384,51 @@ namespace NEAT.NEAT.Models
                     else
                     {
                         innovationNumber = dominant.synapses[i].innovationNumber;
-                        inputNode = dominant.synapses[i].from;
-                        outputNode = dominant.synapses[i].to;
+                        inputNeuron = dominant.synapses[i].from;
+                        outputNeuron = dominant.synapses[i].to;
                         weigth = dominant.synapses[i].weight;
                         enabled = dominant.synapses[i].enabled;
                     }
-                    newGenome.addSynapse(new Synapse(innovationNumber, inputNode, outputNode, weigth, enabled), dominant, other);
+                    newGenome.addSynapse(new Synapse(innovationNumber, inputNeuron, outputNeuron, weigth, enabled), dominant, other);
                 }
             }
 
-            // make sure there are no duplicates
-            newGenome.fixDuplicates();
-
-            // do mutations
+            newGenome.removeDuplicateSynapses();
             newGenome.mutate();
 
             return newGenome;
         }
 
-        public List<Connection> getAllConnections()
+        public List<ZeroSynapse> getAllSynapses()
         {
-            List<Connection> links = new List<Connection>();
+            List<ZeroSynapse> links = new List<ZeroSynapse>();
             foreach(Synapse synapse in this.getSynapses())
-                links.Add(new Connection(synapse.from, synapse.to));
+                links.Add(new ZeroSynapse(synapse.from, synapse.to));
 
             return links;
         }
 
-        public List<Connection> getActiveConnections()
+        public List<ZeroSynapse> getActiveSynapses()
         {
-            List<Connection> links = new List<Connection>();
+            List<ZeroSynapse> links = new List<ZeroSynapse>();
             foreach (Synapse synapse in this.getSynapses())
                 if(synapse.enabled)
-                    links.Add(new Connection(synapse.from, synapse.to));
+                    links.Add(new ZeroSynapse(synapse.from, synapse.to));
 
             return links;
         }
 
-        public void fixDuplicates()
+        public void removeDuplicateSynapses()
         {
             if (this.fitness != -1)
-                return;
+                throw new Exception("Can't remove duplicate of a untested Genome");
 
             foreach (Species species in this.neat.popManager.currentPop.species)
             {
                 foreach (Genome genome in species.genomes)
                 {
-                    List<Connection> conA = this.getAllConnections();
-                    List<Connection> conB = genome.getAllConnections();
+                    List<ZeroSynapse> conA = this.getAllSynapses();
+                    List<ZeroSynapse> conB = genome.getAllSynapses();
 
                     if (ListUtil.equals(conB, conA))
                     {

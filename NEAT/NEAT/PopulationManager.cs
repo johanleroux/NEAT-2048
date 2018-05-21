@@ -37,12 +37,12 @@ namespace NEAT.NEAT
 
             double dist = Config.MUTATION_WEIGHT_CHANCE_RANDOM_RANGE;
             Genome genome = new Genome(neat, null, inputs, outputs);
-            for (int inNode = 1; inNode <= inputs.Length; inNode++)
+            for (int inNeuron = 1; inNeuron <= inputs.Length; inNeuron++)
             {
-                for (int outNode = 1; outNode <= outputs.Length; outNode++)
+                for (int outNeuron = 1; outNeuron <= outputs.Length; outNeuron++)
                 {
                     double weight = RandomUtil.doubleRand(-dist, dist);
-                    genome.addSynapse(new Synapse(neat.getNextInnovationNumber(), inNode, (neat.inputSize + outNode), weight, true), null, null);
+                    genome.addSynapse(new Synapse(neat.getNextInnovationNumber(), inNeuron, (neat.inputSize + outNeuron), weight, true), null, null);
                 }
             }
 
